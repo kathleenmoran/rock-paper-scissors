@@ -12,14 +12,23 @@ function playRound(playerSelection, computerSelection) {
     switch (playerSelection) {
         case 'rock':
             return (computerSelection === 'paper') ? 'You Lose! Paper beats Rock'
-            : 'You Win! Rock beats Scissors'
+            : 'You Win! Rock beats Scissors';
         case 'paper':
             return (computerSelection === 'scissors') ? 'You Lose! Scissors beats Paper'
-            : 'You Win! Paper beats Rock'
+            : 'You Win! Paper beats Rock';
         case 'scissors':
             return (computerSelection == 'rock') ? 'You Lose! Rock beats Scissors'
-            : 'You Win! Scissors beats Paper'
+            : 'You Win! Scissors beats Paper';
         default:
-            return 'The move you have entered is not valid. Please enter "rock", "paper", or "scissors".'
+            return 'The move you have entered is not valid. Please enter "rock", "paper", or "scissors".';
+    }
+}
+
+function game() {
+    let playerScore = 0;
+    const ROUNDS = 5;
+    for (let i = 0; i < ROUNDS; i++) {
+        playerMove = prompt('Please enter "rock", "paper", or "scissors".')
+        playRound(playerMove, computerPlay())
     }
 }
