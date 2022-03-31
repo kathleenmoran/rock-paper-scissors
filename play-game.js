@@ -7,28 +7,62 @@ function computerPlay() {
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
 
-    if (playerSelection === computerSelection) return 'Tie!';
+    if (playerSelection === computerSelection) {
+        return null;
+    }
 
     switch (playerSelection) {
         case 'rock':
-            return (computerSelection === 'paper') ? 'You Lose! Paper beats Rock'
-            : 'You Win! Rock beats Scissors';
+            return computerSelection === 'scissors';
         case 'paper':
-            return (computerSelection === 'scissors') ? 'You Lose! Scissors beats Paper'
-            : 'You Win! Paper beats Rock';
+            return computerSelection === 'rock';
         case 'scissors':
-            return (computerSelection == 'rock') ? 'You Lose! Rock beats Scissors'
-            : 'You Win! Scissors beats Paper';
+            return computerSelection === 'paper';
         default:
-            return 'The move you have entered is not valid. Please enter "rock", "paper", or "scissors".';
+            return null;
     }
+}
+
+function generateRoundMessage(playerWon, playerSelection, computerSelection) {
+    if (playerWon === null) {
+        return 'You entered an invalid move. Please enter either "rock", "paper", or scissors".';
+    }
+    else if (playerSelection.toLowerCase() === computerSelection) {
+        return 'It\'s a tie!';
+    }
+    else {
+        let didPlayerWinMessage = `You ${playerWon ? 'won' : 'lost'}!`;
+        let winnerMove = playerWon ? playerSelection : computerSelection;
+        let loserMove = playerWon ? computerSelection : playerSelection;
+        let beatMessage = `${winnerMove.charAt(0).toUpperCase()}${winnerMove.substring(1)} beats ${loserMove.toLowerCase()}.`;
+        return `${didPlayerWinMessage} ${beatMessage}`;
+    }
+}
+
+function generateFinalMessage(playerScore, computerScore) {
+    let didPlayerWinMessage = (playerScore > computerScore) ? 'You won!' : (computerScore > playerScore) ? 'You lost!' : 'It\'s a tie!';
+    let scoreMessage = `Final score: You - ${playerScore}; Computer - ${computerScore}.`;
+    return `GAME OVER. ${didPlayerWinMessage} ${scoreMessage}`;
 }
 
 function game() {
     let playerScore = 0;
-    const ROUNDS = 5;
-    for (let i = 0; i < ROUNDS; i++) {
-        playerMove = prompt('Please enter "rock", "paper", or "scissors".')
-        playRound(playerMove, computerPlay())
+    let computerScore = 0;
+    let rounds = 5;
+
+    while (rounds > 0) {
+        let playerMove = prompt('Please enter "rock", "paper", or "scissors".');
+        let computerMove = computerPlay();
+        let roundResult = playRound(playerMove, computerMove);
+        console.log(generateRoundMessage(roundResult, playerMove, computerMove));
+        
+        if (roundResult !== null) {
+            roundResult ? ++playerScore : ++computerScore;
+            --rounds;
+        }
     }
+
+    console.log(generateFinalMessage(playerScore, computerScore));
 }
+
+game();
