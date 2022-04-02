@@ -24,11 +24,11 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function generateRoundMessage(playerWon, playerSelection, computerSelection) {
-    if (playerWon === null) {
-        return 'You entered an invalid move. Please enter either "rock", "paper", or scissors".';
-    }
-    else if (playerSelection.toLowerCase() === computerSelection) {
+    if (playerSelection.toLowerCase() === computerSelection) {
         return 'It\'s a tie!';
+    }
+    else if (playerWon === null) {
+        return 'You entered an invalid move. Please enter either "rock", "paper", or scissors".';
     }
     else {
         let didPlayerWinMessage = `You ${playerWon ? 'won' : 'lost'}!`;
