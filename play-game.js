@@ -1,7 +1,10 @@
+let playerScore = 0;
+let computerScore = 0;
+
 function computerPlay() {
-    const moves = ['rock', 'paper', 'scissors'];
-    const randomIndex = Math.floor(Math.random() * moves.length);
-    return moves[randomIndex];
+    const MOVES = ['rock', 'paper', 'scissors'];
+    const randomIndex = Math.floor(Math.random() * MOVES.length);
+    return MOVES[randomIndex];
 }
 
 function didPlayerWinRound(playerSelection, computerSelection) {
@@ -23,7 +26,7 @@ function didPlayerWinRound(playerSelection, computerSelection) {
     }
 }
 
-function generateRoundMessage(playerWon, playerSelection, computerSelection) {
+function generateRoundMessage(playerWon, playerSelection, computerSelection, playerScore, computerScore) {
     if (playerSelection.toLowerCase() === computerSelection) {
         return 'It\'s a tie!';
     }
@@ -35,45 +38,38 @@ function generateRoundMessage(playerWon, playerSelection, computerSelection) {
         const winnerMove = playerWon ? playerSelection : computerSelection;
         const loserMove = playerWon ? computerSelection : playerSelection;
         const beatMessage = `${winnerMove.charAt(0).toUpperCase()}${winnerMove.substring(1)} beats ${loserMove.toLowerCase()}.`;
+        playerWon ? ++playerScore : ++computerScore;
         return `${didPlayerWinMessage} ${beatMessage}`;
     }
 }
 
-function generateFinalMessage(playerScore, computerScore) {
-    const didPlayerWinMessage = (playerScore > computerScore) ? 'You won!' : (computerScore > playerScore) ? 'You lost!' : 'It\'s a tie!';
+function generateFinalMessage() {
+    const didPlayerWinMessage = (playerScore > computerScore) ? 'You won!' : 
+            (computerScore > playerScore) ? 'You lost!' : 'It\'s a tie!';
     const scoreMessage = `Final score: You - ${playerScore}; Computer - ${computerScore}.`;
-    return `GAME OVER. ${didPlayerWinMessage} ${scoreMessage}`;
+    const resultContainer = document.querySelector('.result-container');
+    resultContainer.textContent = `GAME OVER. ${didPlayerWinMessage} ${scoreMessage}`;
 }
 
 function playerPlay(e) {
     const playerMove = e.target.value;
     const computerMove = computerPlay();
     const playerWon = didPlayerWinRound(playerMove, computerMove);
+
     const resultContainer = document.querySelector('.result-container');
     resultContainer.textContent = generateRoundMessage(playerWon, playerMove, computerMove);
+
+    if (playerWon === true) ++playerScore;
+    else if (playerWon === false) ++computerScore;
+
+    if (playerScore === 5 || computerScore === 5) generateFinalMessage();
 }
 
-const moveButtons = document.querySelectorAll('.move-button');
-moveButtons.forEach(button => button.addEventListener('click', playerPlay))
-
 function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    let rounds = 0;
-
-    while (rounds > 0) {
-        let playerMove = prompt('Please enter "rock", "paper", or "scissors".');
-        let computerMove = computerPlay();
-        let roundResult = didPlayerWinRound(playerMove, computerMove);
-        console.log(generateRoundMessage(roundResult, playerMove, computerMove));
-        
-        if (roundResult !== null) {
-            roundResult ? ++playerScore : ++computerScore;
-            --rounds;
-        }
-    }
-
-    console.log(generateFinalMessage(playerScore, computerScore));
+    playerScore = 0;
+    computerScore = 0;
+    const moveButtons = document.querySelectorAll('.move-button');
+    moveButtons.forEach(button => button.addEventListener('click', playerPlay));
 }
 
 game();
