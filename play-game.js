@@ -48,7 +48,7 @@ function generateFinalMessage(playerScore, computerScore) {
 function game() {
     let playerScore = 0;
     let computerScore = 0;
-    let rounds = 5;
+    let rounds = 0;
 
     while (rounds > 0) {
         let playerMove = prompt('Please enter "rock", "paper", or "scissors".');
