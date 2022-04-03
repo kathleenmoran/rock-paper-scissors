@@ -49,7 +49,8 @@ function playerPlay(e) {
     const playerMove = e.target.value;
     const computerMove = computerPlay();
     const playerWon = didPlayerWinRound(playerMove, computerMove);
-    console.log(generateRoundMessage(playerWon, playerMove, computerMove));
+    const resultContainer = document.querySelector('.result-container');
+    resultContainer.textContent = generateRoundMessage(playerWon, playerMove, computerMove);
 }
 
 const moveButtons = document.querySelectorAll('.move-button');
