@@ -1,10 +1,10 @@
 function computerPlay() {
-    let moves = ['rock', 'paper', 'scissors'];
-    let randomIndex = Math.floor(Math.random() * moves.length);
+    const moves = ['rock', 'paper', 'scissors'];
+    const randomIndex = Math.floor(Math.random() * moves.length);
     return moves[randomIndex];
 }
 
-function playRound(playerSelection, computerSelection) {
+function didPlayerWinRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
 
     if (playerSelection === computerSelection) {
@@ -31,17 +31,17 @@ function generateRoundMessage(playerWon, playerSelection, computerSelection) {
         return 'You entered an invalid move. Please enter either "rock", "paper", or scissors".';
     }
     else {
-        let didPlayerWinMessage = `You ${playerWon ? 'won' : 'lost'}!`;
-        let winnerMove = playerWon ? playerSelection : computerSelection;
-        let loserMove = playerWon ? computerSelection : playerSelection;
-        let beatMessage = `${winnerMove.charAt(0).toUpperCase()}${winnerMove.substring(1)} beats ${loserMove.toLowerCase()}.`;
+        const didPlayerWinMessage = `You ${playerWon ? 'won' : 'lost'}!`;
+        const winnerMove = playerWon ? playerSelection : computerSelection;
+        const loserMove = playerWon ? computerSelection : playerSelection;
+        const beatMessage = `${winnerMove.charAt(0).toUpperCase()}${winnerMove.substring(1)} beats ${loserMove.toLowerCase()}.`;
         return `${didPlayerWinMessage} ${beatMessage}`;
     }
 }
 
 function generateFinalMessage(playerScore, computerScore) {
-    let didPlayerWinMessage = (playerScore > computerScore) ? 'You won!' : (computerScore > playerScore) ? 'You lost!' : 'It\'s a tie!';
-    let scoreMessage = `Final score: You - ${playerScore}; Computer - ${computerScore}.`;
+    const didPlayerWinMessage = (playerScore > computerScore) ? 'You won!' : (computerScore > playerScore) ? 'You lost!' : 'It\'s a tie!';
+    const scoreMessage = `Final score: You - ${playerScore}; Computer - ${computerScore}.`;
     return `GAME OVER. ${didPlayerWinMessage} ${scoreMessage}`;
 }
 
@@ -53,7 +53,7 @@ function game() {
     while (rounds > 0) {
         let playerMove = prompt('Please enter "rock", "paper", or "scissors".');
         let computerMove = computerPlay();
-        let roundResult = playRound(playerMove, computerMove);
+        let roundResult = didPlayerWinRound(playerMove, computerMove);
         console.log(generateRoundMessage(roundResult, playerMove, computerMove));
         
         if (roundResult !== null) {
