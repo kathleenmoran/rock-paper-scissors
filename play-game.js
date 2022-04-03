@@ -45,6 +45,16 @@ function generateFinalMessage(playerScore, computerScore) {
     return `GAME OVER. ${didPlayerWinMessage} ${scoreMessage}`;
 }
 
+function playerPlay(e) {
+    const playerMove = e.target.value;
+    const computerMove = computerPlay();
+    const playerWon = didPlayerWinRound(playerMove, computerMove);
+    console.log(generateRoundMessage(playerWon, playerMove, computerMove));
+}
+
+const moveButtons = document.querySelectorAll('.move-button');
+moveButtons.forEach(button => button.addEventListener('click', playerPlay))
+
 function game() {
     let playerScore = 0;
     let computerScore = 0;
