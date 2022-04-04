@@ -26,7 +26,7 @@ function didPlayerWinRound(playerSelection, computerSelection) {
     }
 }
 
-function generateRoundMessage(playerWon, playerSelection, computerSelection, playerScore, computerScore) {
+function generateRoundMessage(playerWon, playerSelection, computerSelection) {
     if (playerSelection.toLowerCase() === computerSelection) {
         return 'It\'s a tie!';
     }
@@ -38,7 +38,6 @@ function generateRoundMessage(playerWon, playerSelection, computerSelection, pla
         const winnerMove = playerWon ? playerSelection : computerSelection;
         const loserMove = playerWon ? computerSelection : playerSelection;
         const beatMessage = `${winnerMove.charAt(0).toUpperCase()}${winnerMove.substring(1)} beats ${loserMove.toLowerCase()}.`;
-        playerWon ? ++playerScore : ++computerScore;
         return `${didPlayerWinMessage} ${beatMessage}`;
     }
 }
@@ -51,8 +50,13 @@ function generateFinalMessage() {
     resultContainer.textContent = `GAME OVER. ${didPlayerWinMessage} ${scoreMessage}`;
 }
 
-function updateMovesMade(selection, isPlayerSelection) {
-    const moveDisplay = isPlayerSelection ? document.querySelector('.player-move') :
+function resetScores() {
+    playerScore = 0;
+    computerScore = 0;
+}
+
+function updateMoveMade(selection, isPlayer) {
+    const moveDisplay = isPlayer ? document.querySelector('.player-move') :
             document.querySelector('.computer-move');
 
     switch (selection) {
@@ -70,6 +74,17 @@ function updateMovesMade(selection, isPlayerSelection) {
     }
 }
 
+function updateScores(playerWon) {
+    if (playerWon === true) ++playerScore;
+    else if (playerWon === false) ++computerScore;
+
+    const playerScoreDisplay = document.querySelector('.player-score');
+    playerScoreDisplay.textContent = `Player: ${playerScore}`;
+
+    const computerScoreDisplay = document.querySelector('.computer-score');
+    computerScoreDisplay.textContent = `Computer: ${computerScore}`;
+}
+
 function playerPlay(e) {
     const playerMove = e.target.value;
     const computerMove = computerPlay();
@@ -78,17 +93,19 @@ function playerPlay(e) {
     const resultContainer = document.querySelector('.result-container');
     resultContainer.textContent = generateRoundMessage(playerWon, playerMove, computerMove);
 
-    if (playerWon === true) ++playerScore;
-    else if (playerWon === false) ++computerScore;
+    updateMoveMade(playerMove, true);
+    updateMoveMade(computerMove, false);
+    updateScores(playerWon);
+    console.log(playerScore);
+    console.log(computerScore);
 
-    updateMovesMade(playerMove, true);
-    updateMovesMade(computerMove, false);
-    if (playerScore === 5 || computerScore === 5) generateFinalMessage();
+    if (playerScore === 5 || computerScore === 5) {
+        generateFinalMessage();
+        resetScores();
+    }
 }
 
 function game() {
-    playerScore = 0;
-    computerScore = 0;
     const moveButtons = document.querySelectorAll('.move-button');
     moveButtons.forEach(button => button.addEventListener('click', playerPlay));
 }
