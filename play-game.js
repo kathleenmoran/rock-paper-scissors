@@ -13,7 +13,7 @@ function didPlayerWinRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
         return null;
     }
-
+    console.log('im here');
     switch (playerSelection) {
         case 'rock':
             return computerSelection === 'scissors';
@@ -51,6 +51,25 @@ function generateFinalMessage() {
     resultContainer.textContent = `GAME OVER. ${didPlayerWinMessage} ${scoreMessage}`;
 }
 
+function updateMovesMade(selection, isPlayerSelection) {
+    const moveDisplay = isPlayerSelection ? document.querySelector('.player-move') :
+            document.querySelector('.computer-move');
+
+    switch (selection) {
+        case 'rock':
+            moveDisplay.textContent = '✊';
+            break;
+        case 'paper':
+            moveDisplay.textContent = '✋';
+            break;
+        case 'scissors':
+            moveDisplay.textContent = '✌️';
+            break;
+        default:
+            moveDisplay.textContent = '?';
+    }
+}
+
 function playerPlay(e) {
     const playerMove = e.target.value;
     const computerMove = computerPlay();
@@ -62,6 +81,8 @@ function playerPlay(e) {
     if (playerWon === true) ++playerScore;
     else if (playerWon === false) ++computerScore;
 
+    updateMovesMade(playerMove, true);
+    updateMovesMade(computerMove, false);
     if (playerScore === 5 || computerScore === 5) generateFinalMessage();
 }
 
