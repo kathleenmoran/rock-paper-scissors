@@ -2,25 +2,24 @@ let playerScore = 0;
 let computerScore = 0;
 
 function computerPlay() {
-    const MOVES = ['rock', 'paper', 'scissors'];
+    const MOVES = ['Rock', 'Paper', 'Scissors'];
+    // generates a random index in order to select a randon rps move
     const randomIndex = Math.floor(Math.random() * MOVES.length);
     return MOVES[randomIndex];
 }
 
 function didPlayerWinRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toLowerCase();
-
     if (playerSelection === computerSelection) {
         return null;
     }
 
     switch (playerSelection) {
-        case 'rock':
-            return computerSelection === 'scissors';
-        case 'paper':
-            return computerSelection === 'rock';
-        case 'scissors':
-            return computerSelection === 'paper';
+        case 'Rock':
+            return computerSelection === 'Scissors';
+        case 'Paper':
+            return computerSelection === 'Rock';
+        case 'Scissors':
+            return computerSelection === 'Paper';
         default:
             return null;
     }
@@ -28,28 +27,32 @@ function didPlayerWinRound(playerSelection, computerSelection) {
 
 function generateRoundMessage(playerWon, playerSelection, computerSelection) {
     if (playerWon === null) {
-        return 'It\'s a tie!';
+        return 'It\'s a Tie!';
     }
     else {
+        // updates heading to indicate who won round
         const resultHeading = document.querySelector('.result-heading');
-        resultHeading.textContent = `You ${playerWon ? 'won' : 'lost'}!`;
+        resultHeading.textContent = `You ${playerWon ? 'Won' : 'Lost'}!`;
 
+        // updates subheading to indicate which move beat the other move 
         const resultSubheading = document.querySelector('.result-subheading');
         const winnerMove = playerWon ? playerSelection : computerSelection;
         const loserMove = playerWon ? computerSelection : playerSelection;
-        resultSubheading.textContent = `${winnerMove.charAt(0).toUpperCase()}${winnerMove.substring(1)} beats ${loserMove}`;
+        resultSubheading.textContent = `${winnerMove} Beats ${loserMove}`;
     }
 }
 
 function generateFinalMessage() {
 
+    // updates heading to GAME OVER
     const resultHeading = document.querySelector('.result-heading');
     resultHeading.textContent = `GAME OVER`;
 
-    const didPlayerWinMessage = (playerScore > computerScore) ? 'You won!' : 
-            (computerScore > playerScore) ? 'You lost!' : 'It\'s a tie!';
+    // updates subheading to indicate who won game and how to play again
+    const didPlayerWinMessage = (playerScore > computerScore) ? 'You Won!' : 
+            (computerScore > playerScore) ? 'You Lost!' : 'It\'s a Tie!';
     const resultSubheading = document.querySelector('.result-subheading');
-    resultSubheading.textContent = `${didPlayerWinMessage} Choose a move to play again`;
+    resultSubheading.textContent = `${didPlayerWinMessage} Choose a Move to Play Again:`;
 }
 
 function resetScores() {
