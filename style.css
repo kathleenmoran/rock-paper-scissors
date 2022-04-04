@@ -33,6 +33,7 @@ h1 {
     justify-content: center;
     gap: 40px;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .move,
