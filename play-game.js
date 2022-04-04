@@ -26,16 +26,18 @@ function didPlayerWinRound(playerSelection, computerSelection) {
 }
 
 function generateRoundMessage(playerWon, playerSelection, computerSelection) {
+    const resultHeading = document.querySelector('.result-heading');
+    const resultSubheading = document.querySelector('.result-subheading');
+
     if (playerWon === null) {
-        return 'It\'s a Tie!';
+        resultHeading.textContent = 'It\'s a Tie!'
+        resultSubheading.textContent = `You and the Computer Both Selected ${playerSelection}`;
     }
     else {
         // updates heading to indicate who won round
-        const resultHeading = document.querySelector('.result-heading');
         resultHeading.textContent = `You ${playerWon ? 'Won' : 'Lost'}!`;
 
         // updates subheading to indicate which move beat the other move 
-        const resultSubheading = document.querySelector('.result-subheading');
         const winnerMove = playerWon ? playerSelection : computerSelection;
         const loserMove = playerWon ? computerSelection : playerSelection;
         resultSubheading.textContent = `${winnerMove} Beats ${loserMove}`;
