@@ -67,13 +67,13 @@ function updateMoveMade(selection, isPlayer) {
             document.querySelector('.computer-move');
 
     switch (selection) {
-        case 'rock':
+        case 'Rock':
             moveDisplay.textContent = '✊';
             break;
-        case 'paper':
+        case 'Paper':
             moveDisplay.textContent = '✋';
             break;
-        case 'scissors':
+        case 'Scissors':
             moveDisplay.textContent = '✌️';
             break;
         default:
