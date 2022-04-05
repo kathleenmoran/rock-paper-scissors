@@ -8,6 +8,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding: 0px;
 }
 
 body,
@@ -23,7 +24,6 @@ h1 {
 }
 
 .content-container {
-    padding: 100px;
     font-size: 25px;
 }
 
@@ -32,13 +32,13 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 40px;
-    justify-content: space-evenly;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
 .move,
 button {
-    font-size: 100px;
+    font-size: 75px;
 }
 
 button {
