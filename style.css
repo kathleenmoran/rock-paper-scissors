@@ -17,7 +17,7 @@ h1 {
 }
 
 h1 {
-    color: #fac650;
+    color: #FAC650;
     background-color: #232C2F;
     padding: 20px;
     font-size: 60px;
@@ -47,6 +47,10 @@ button {
     border-radius: 10px;
     margin: 30px 0px;
     border: none;
+}
+
+.move-button:hover {
+    background-color: #FAC650;
 }
 
 .footer {
